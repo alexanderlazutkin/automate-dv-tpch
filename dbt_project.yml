@@ -1,0 +1,40 @@
+name: 'dbt_tpch'
+version: '1.0.0'
+config-version: 2
+
+profile: 'dbt_tpch'
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+analysis-paths: ["analyses"]
+macro-paths: ["macros"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+vars:
+  hash: 'md5'
+  enable_native_hashes: false
+  concat_string: '||'
+  null_placeholder_string: '^^'
+  max_datetime: '9999-12-31 23:59:59.999999'
+
+models:
+  dbt_tpch:
+    +materialized: view
+    staging:
+      +schema: staging
+    raw_vault:
+      +schema: raw_vault
+      hubs:
+        +materialized: table
+      links:
+        +materialized: table
+      satellites:
+        +materialized: table
+    marts:
+      +schema: marts
+      +materialized: table

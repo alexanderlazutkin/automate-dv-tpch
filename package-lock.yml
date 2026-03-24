@@ -1,0 +1,7 @@
+packages:
+  - local: ../automate-dv
+    name: automate_dv
+  - name: dbt_utils
+    package: dbt-labs/dbt_utils
+    version: 1.3.3
+sha1_hash: 10aeb5e649461e8f53caf5ff25cbc972b5bd5f82

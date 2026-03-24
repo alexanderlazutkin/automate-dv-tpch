@@ -1,0 +1,8 @@
+dbt_tpch:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: ../tpch.duckdb
+      schema: main
+      threads: 2
