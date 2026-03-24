@@ -1,6 +1,7 @@
 # dbt_tpch
 
-Проект dbt для построения Raw Data Vault поверх TPC-H (DuckDB) с локальным пакетом `automate-dv`.
+Проект dbt для построения Raw Data Vault поверх TPC-H (DuckDB) с локальным пакетом `automate-dv` (https://github.com/alexanderlazutkin/automate-dv).
+БД tpch.duckdb генерируется с необходимым фактором масштабирования и уточняется путь к ней в profiles.yml
 
 ## Профиль
 
