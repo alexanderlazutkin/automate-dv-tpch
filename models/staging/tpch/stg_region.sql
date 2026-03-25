@@ -1,9 +1,10 @@
 {{ automate_dv.stage(
     source_model={'tpch': 'region'},
+    include_source_columns=true,
     hashed_columns={
         'region_hk': 'r_regionkey',
-        'region_pk': 'r_regionkey',
         'hashdiff': [
+            'r_regionkey',
             'r_name',
             'r_comment'
         ]

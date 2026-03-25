@@ -1,13 +1,13 @@
 {{ automate_dv.stage(
     source_model={'tpch': 'partsupp'},
+    include_source_columns=true,
     hashed_columns={
         'part_hk': 'ps_partkey',
         'supplier_hk': 'ps_suppkey',
-        'part_supplier_lk': ['ps_partkey', 'ps_suppkey'],
-        'part_pk': 'ps_partkey',
-        'supplier_pk': 'ps_suppkey',
-        'part_supplier_pk': ['ps_partkey', 'ps_suppkey'],
+        'part_supplier_hk': ['ps_partkey', 'ps_suppkey'],
         'hashdiff': [
+            'ps_partkey',
+            'ps_suppkey',
             'ps_availqty',
             'ps_supplycost',
             'ps_comment'

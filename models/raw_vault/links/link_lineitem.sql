@@ -1,6 +1,6 @@
 {{ automate_dv.t_link(
-    src_pk='lineitem_pk',
-    src_fk=['lineitem_pk', 'order_pk', 'part_pk', 'supplier_pk'],
+    src_pk='lineitem_hk',
+    src_fk=['order_hk', 'part_hk', 'supplier_hk'],
     src_payload=[
         'l_linenumber',
         'l_quantity',

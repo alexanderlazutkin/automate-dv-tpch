@@ -1,13 +1,12 @@
 {{ automate_dv.stage(
     source_model={'tpch': 'orders'},
+    include_source_columns=true,
     hashed_columns={
-        'order_pk': 'o_orderkey',
         'order_hk': 'o_orderkey',
         'customer_hk': 'o_custkey',
-        'order_customer_lk': ['o_orderkey', 'o_custkey'],
-        'customer_pk': 'o_custkey',
-        'order_customer_pk': ['o_orderkey', 'o_custkey'],
+        'order_customer_hk': ['o_orderkey', 'o_custkey'],
         'hashdiff': [
+            'o_orderkey',
             'o_orderstatus',
             'o_totalprice',
             'o_orderdate',

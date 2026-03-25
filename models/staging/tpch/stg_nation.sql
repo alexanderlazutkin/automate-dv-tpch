@@ -1,13 +1,12 @@
 {{ automate_dv.stage(
     source_model={'tpch': 'nation'},
+    include_source_columns=true,
     hashed_columns={
         'nation_hk': 'n_nationkey',
         'region_hk': 'n_regionkey',
-        'nation_region_lk': ['n_nationkey', 'n_regionkey'],
-        'nation_pk': 'n_nationkey',
-        'region_pk': 'n_regionkey',
-        'nation_region_pk': ['n_nationkey', 'n_regionkey'],
+        'nation_region_hk': ['n_nationkey', 'n_regionkey'],
         'hashdiff': [
+            'n_nationkey',
             'n_name',
             'n_comment'
         ]

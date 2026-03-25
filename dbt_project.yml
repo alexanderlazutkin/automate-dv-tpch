@@ -27,14 +27,26 @@ models:
     +materialized: view
     staging:
       +schema: staging
+      +tags:
+          - 'staging'
     raw_vault:
       +schema: raw_vault
+      +tags:
+        - 'raw_vault'
       hubs:
         +materialized: table
+        +tags:
+          - 'hub'
       links:
         +materialized: table
+        +tags:
+          - 'link'
       satellites:
         +materialized: table
+        +tags:
+          - 'satellite'
     marts:
       +schema: marts
       +materialized: table
+      +tags:
+          - 'mart'

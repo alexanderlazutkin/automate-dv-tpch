@@ -4,25 +4,23 @@ models:
   - name: stg_customer
     description: Staging-модель для таблицы customer.
     columns:
-      - name: customer_pk
-        tests: [not_null]
-      - name: customer_nation_lk
       - name: customer_hk
+        tests: [not_null]
+      - name: customer_nation_hk
       - name: nation_hk
       - name: effective_from
       - name: effective_to
   - name: stg_orders
     columns:
-      - name: order_customer_lk
       - name: order_hk
+      - name: order_customer_hk
       - name: customer_hk
       - name: effective_from
       - name: effective_to
   - name: stg_lineitem
     columns:
-      - name: lineitem_part_lk
-      - name: lineitem_part_supplier_lk
       - name: lineitem_hk
+      - name: order_hk
       - name: part_hk
       - name: supplier_hk
       - name: effective_from
@@ -34,21 +32,21 @@ models:
       - name: effective_to
   - name: stg_partsupp
     columns:
-      - name: part_supplier_lk
+      - name: part_supplier_hk
       - name: part_hk
       - name: supplier_hk
       - name: effective_from
       - name: effective_to
   - name: stg_supplier
     columns:
-      - name: supplier_nation_lk
+      - name: supplier_nation_hk
       - name: supplier_hk
       - name: nation_hk
       - name: effective_from
       - name: effective_to
   - name: stg_nation
     columns:
-      - name: nation_region_lk
+      - name: nation_region_hk
       - name: nation_hk
       - name: region_hk
       - name: effective_from
@@ -58,13 +56,10 @@ models:
       - name: region_hk
       - name: effective_from
       - name: effective_to
-  - name: stg_customer_nation
-  - name: stg_supplier_nation
-
   - name: hub_customer
     description: "Hub клиентов."
     columns:
-      - name: customer_pk
+      - name: customer_hk
         description: "Hashkey (_pk) клиента из атрибута источника `c_custkey`."
         tests: [not_null, unique]
       - name: c_custkey
@@ -77,7 +72,7 @@ models:
   - name: hub_supplier
     description: "Hub поставщиков."
     columns:
-      - name: supplier_pk
+      - name: supplier_hk
         description: "Hashkey (_pk) поставщика из атрибута источника `s_suppkey`."
         tests: [not_null, unique]
       - name: s_suppkey
@@ -90,7 +85,7 @@ models:
   - name: hub_part
     description: "Hub деталей."
     columns:
-      - name: part_pk
+      - name: part_hk
         description: "Hashkey (_pk) детали из атрибута источника `p_partkey`."
         tests: [not_null, unique]
       - name: p_partkey
@@ -103,7 +98,7 @@ models:
   - name: hub_order
     description: "Hub заказов."
     columns:
-      - name: order_pk
+      - name: order_hk
         description: "Hashkey (_pk) заказа из атрибута источника `o_orderkey`."
         tests: [not_null, unique]
       - name: o_orderkey
@@ -116,7 +111,7 @@ models:
   - name: hub_nation
     description: "Hub стран."
     columns:
-      - name: nation_pk
+      - name: nation_hk
         description: "Hashkey (_pk) страны из атрибута источника `n_nationkey`."
         tests: [not_null, unique]
       - name: n_nationkey
@@ -129,7 +124,7 @@ models:
   - name: hub_region
     description: "Hub регионов."
     columns:
-      - name: region_pk
+      - name: region_hk
         description: "Hashkey (_pk) региона из атрибута источника `r_regionkey`."
         tests: [not_null, unique]
       - name: r_regionkey
@@ -142,11 +137,11 @@ models:
   - name: link_order_customer
     description: "Link заказ-клиент с эффектитивностью."
     columns:
-      - name: order_customer_pk
+      - name: order_customer_hk
         description: "Hashkey (_pk) связи из атрибутов источника `o_orderkey` + `o_custkey`."
-      - name: order_pk
+      - name: order_hk
         description: "FK (_pk) на заказ из атрибута источника `o_orderkey`."
-      - name: customer_pk
+      - name: customer_hk
         description: "FK (_pk) на клиента из атрибута источника `o_custkey`."
       - name: effective_from
         description: "Начало действия версии связи."
@@ -160,11 +155,11 @@ models:
   - name: link_part_supplier
     description: "Link деталь-поставщик с эффектитивностью."
     columns:
-      - name: part_supplier_pk
+      - name: part_supplier_hk
         description: "Hashkey (_pk) связи из атрибутов источника `ps_partkey` + `ps_suppkey`."
-      - name: part_pk
+      - name: part_hk
         description: "FK (_pk) на деталь из атрибута источника `ps_partkey`."
-      - name: supplier_pk
+      - name: supplier_hk
         description: "FK (_pk) на поставщика из атрибута источника `ps_suppkey`."
       - name: effective_from
         description: "Начало действия версии связи."
@@ -178,11 +173,11 @@ models:
   - name: link_supplier_nation
     description: "Link поставщик-страна с эффектитивностью."
     columns:
-      - name: supplier_nation_pk
+      - name: supplier_nation_hk
         description: "Hashkey (_pk) связи из атрибутов источника `s_suppkey` + `s_nationkey`."
-      - name: supplier_pk
+      - name: supplier_hk
         description: "FK (_pk) на поставщика из атрибута источника `s_suppkey`."
-      - name: nation_pk
+      - name: nation_hk
         description: "FK (_pk) на страну из атрибута источника `s_nationkey`."
       - name: effective_from
         description: "Начало действия версии связи."
@@ -196,11 +191,11 @@ models:
   - name: link_customer_nation
     description: "Link клиент-страна с эффектитивностью."
     columns:
-      - name: customer_nation_pk
+      - name: customer_nation_hk
         description: "Hashkey (_pk) связи из атрибутов источника `c_custkey` + `c_nationkey`."
-      - name: customer_pk
+      - name: customer_hk
         description: "FK (_pk) на клиента из атрибута источника `c_custkey`."
-      - name: nation_pk
+      - name: nation_hk
         description: "FK (_pk) на страну из атрибута источника `c_nationkey`."
       - name: effective_from
         description: "Начало действия версии связи."
@@ -214,11 +209,11 @@ models:
   - name: link_nation_region
     description: "Link страна-регион с эффектитивностью."
     columns:
-      - name: nation_region_pk
+      - name: nation_region_hk
         description: "Hashkey (_pk) связи из атрибутов источника `n_nationkey` + `n_regionkey`."
-      - name: nation_pk
+      - name: nation_hk
         description: "FK (_pk) на страну из атрибута источника `n_nationkey`."
-      - name: region_pk
+      - name: region_hk
         description: "FK (_pk) на регион из атрибута источника `n_regionkey`."
       - name: effective_from
         description: "Начало действия версии связи."
@@ -232,12 +227,14 @@ models:
   - name: link_lineitem
     description: "Транзакционный link строк заказа (t_link) с payload-атрибутами."
     columns:
-      - name: lineitem_pk
+      - name: lineitem_hk
         description: "Hashkey (_pk) транзакционной связи из атрибутов источника `l_orderkey` + `l_linenumber`"
         tests: [not_null, unique]
-      - name: part_pk
+      - name: order_hk
+        description: "FK (_pk) на заказ из атрибута источника `l_orderkey`."
+      - name: part_hk
         description: "FK (_pk) на деталь из атрибута источника `l_partkey`."
-      - name: supplier_pk
+      - name: supplier_hk
         description: "FK (_pk) на поставщика из атрибута источника `l_suppkey`."
       - name: l_linenumber
         description: "Номер позиции в заказе."
@@ -275,12 +272,8 @@ models:
   - name: sat_customer
     description: "Сателлит клиентских описательных атрибутов."
     columns:
-      - name: customer_nation_lk
-        description: "Ключ сателлита (_lk) из атрибутов источника `c_custkey` + `c_nationkey`."
       - name: customer_hk
-        description: "DFK (_hk) из атрибута источника `c_custkey`."
-      - name: nation_hk
-        description: "SFK (_hk) из атрибута источника `c_nationkey`."
+        description: "Ключ сателлита (_hk) из атрибута источника `c_custkey`."
       - name: c_name
         description: "Наименование клиента."
       - name: c_address
@@ -301,12 +294,8 @@ models:
   - name: sat_supplier
     description: "Сателлит поставщиков."
     columns:
-      - name: supplier_nation_lk
-        description: "Ключ сателлита (_lk) из атрибутов источника `s_suppkey` + `s_nationkey`."
       - name: supplier_hk
-        description: "DFK (_hk) из атрибута источника `s_suppkey`."
-      - name: nation_hk
-        description: "SFK (_hk) из атрибута источника `s_nationkey`."
+        description: "Ключ сателлита (_hk) из атрибута источника `s_suppkey`."
       - name: s_name
         description: "Наименование поставщика."
       - name: s_address
@@ -351,12 +340,8 @@ models:
   - name: sat_order
     description: "Сателлит заказов."
     columns:
-      - name: order_customer_lk
-        description: "Ключ сателлита (_lk) из атрибутов источника `o_orderkey` + `o_custkey`."
       - name: order_hk
-        description: "DFK (_hk) из атрибута источника `o_orderkey`."
-      - name: customer_hk
-        description: "SFK (_hk) из атрибута источника `o_custkey`."
+        description: "Ключ сателлита из атрибутов источника `o_orderkey`."
       - name: o_orderstatus
         description: "Статус заказа."
       - name: o_totalprice
@@ -379,12 +364,8 @@ models:
   - name: sat_nation
     description: "Сателлит стран."
     columns:
-      - name: nation_region_lk
-        description: "Ключ сателлита (_lk) из атрибутов источника `n_nationkey` + `n_regionkey`."
       - name: nation_hk
-        description: "DFK (_hk) из атрибута источника `n_nationkey`."
-      - name: region_hk
-        description: "SFK (_hk) из атрибута источника `n_regionkey`."
+        description: "Ключ сателлита (_hk) из атрибута источника `n_nationkey`."
       - name: n_name
         description: "Наименование страны."
       - name: n_comment
@@ -411,8 +392,8 @@ models:
   - name: sat_partsupp
     description: "Сателлит связки деталь-поставщик."
     columns:
-      - name: part_supplier_lk
-        description: "Ключ сателлита (_lk) из атрибутов источника `ps_partkey` + `ps_suppkey`."
+      - name: part_supplier_hk
+        description: "Ключ сателлита (_hk) из атрибутов источника `ps_partkey` + `ps_suppkey`."
       - name: part_hk
         description: "DFK (_hk) из атрибута источника `ps_partkey`."
       - name: supplier_hk
@@ -431,25 +412,24 @@ models:
   - name: fact_sales
     description: "Факт продаж"
     columns:
-      - name: orderkey
-        tests: [not_null]
-      - name: orderdate
-      - name: custkey
-      - name: l_orderkey
-      - name: l_partkey
-      - name: l_suppkey
-      - name: l_linenumber
-      - name: l_quantity
-      - name: l_extendedprice
-      - name: l_discount
-      - name: l_tax
-      - name: l_returnflag
-      - name: l_linestatus
-      - name: l_shipdate
-      - name: l_commitdate
-      - name: l_receiptdate
-      - name: l_shipinstruct
-      - name: l_shipmode
-      - name: l_comment
+      - name: order_key
+      - name: order_id
+      - name: order_date
+      - name: customer_hk
+      - name: part_hk
+      - name: supplier_hk
+      - name: line_number
+      - name: quantity
+      - name: extended_price
+      - name: discount
+      - name: tax
+      - name: return_flag
+      - name: line_status
+      - name: ship_date
+      - name: commit_date
+      - name: receipt_date
+      - name: ship_instruct
+      - name: ship_mode
+      - name: comment
       - name: net_price
       - name: total_price_with_tax

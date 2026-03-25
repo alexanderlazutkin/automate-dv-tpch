@@ -7,9 +7,9 @@
 }}
 
 {{ automate_dv.eff_sat(
-    src_pk='customer_nation_lk',
+    src_pk='customer_hk',
     src_dfk='customer_hk',
-    src_sfk='nation_hk',
+    src_sfk='customer_hk',
     src_extra_columns=['c_name', 'c_address', 'c_phone', 'c_acctbal', 'c_mktsegment', 'c_comment'],
     src_start_date='effective_from',
     src_end_date='effective_to',

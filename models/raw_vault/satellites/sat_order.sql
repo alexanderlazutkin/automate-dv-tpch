@@ -7,9 +7,9 @@
 }}
 
 {{ automate_dv.eff_sat(
-    src_pk='order_customer_lk',
+    src_pk='order_hk',
     src_dfk='order_hk',
-    src_sfk='customer_hk',
+    src_sfk='order_hk',
     src_extra_columns=['o_orderstatus', 'o_totalprice', 'o_orderdate', 'o_orderpriority', 'o_clerk', 'o_shippriority', 'o_comment'],
     src_start_date='effective_from',
     src_end_date='effective_to',

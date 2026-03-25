@@ -7,9 +7,9 @@
 }}
 
 {{ automate_dv.eff_sat(
-    src_pk='nation_region_lk',
+    src_pk='nation_hk',
     src_dfk='nation_hk',
-    src_sfk='region_hk',
+    src_sfk='nation_hk',
     src_extra_columns=['n_name', 'n_comment'],
     src_start_date='effective_from',
     src_end_date='effective_to',

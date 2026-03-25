@@ -1,12 +1,12 @@
 {{ automate_dv.stage(
     source_model={'tpch': 'supplier'},
+    include_source_columns=true,
     hashed_columns={
-        'supplier_pk': 's_suppkey',
         'supplier_hk': 's_suppkey',
         'nation_hk': 's_nationkey',
-        'supplier_nation_lk': ['s_suppkey', 's_nationkey'],
-        'supplier_nation_fk': 's_nationkey',
+        'supplier_nation_hk': ['s_suppkey', 's_nationkey'],
         'hashdiff': [
+            's_suppkey',
             's_name',
             's_address',
             's_phone',

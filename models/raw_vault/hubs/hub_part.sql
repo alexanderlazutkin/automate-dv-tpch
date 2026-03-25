@@ -1,5 +1,5 @@
 {{ automate_dv.hub(
-    src_pk='part_pk',
+    src_pk='part_hk',
     src_nk='p_partkey',
     src_ldts='load_datetime',
     src_source='record_source',

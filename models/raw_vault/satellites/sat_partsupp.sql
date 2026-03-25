@@ -7,7 +7,7 @@
 }}
 
 {{ automate_dv.eff_sat(
-    src_pk='part_supplier_lk',
+    src_pk='part_supplier_hk',
     src_dfk='part_hk',
     src_sfk='supplier_hk',
     src_extra_columns=['ps_availqty', 'ps_supplycost', 'ps_comment'],

@@ -1,9 +1,10 @@
 {{ automate_dv.stage(
     source_model={'tpch': 'part'},
+    include_source_columns=true,
     hashed_columns={
-        'part_pk': 'p_partkey',
         'part_hk': 'p_partkey',
         'hashdiff': [
+            'p_partkey',
             'p_name',
             'p_mfgr',
             'p_brand',
