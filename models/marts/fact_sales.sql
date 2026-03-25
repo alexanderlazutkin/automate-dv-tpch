@@ -1,10 +1,8 @@
 select
-    ho.o_orderkey as order_key,
     ho.order_hk as order_id,
-    so.o_orderdate as order_date,
-    loc.customer_hk,
-    lli.part_hk,
-    lli.supplier_hk,
+    loc.customer_hk as customer_id,
+    lli.part_hk as part_id,
+    lli.supplier_hk as supplier_id,
     lli.l_linenumber as line_number,
     lli.l_quantity as quantity,
     lli.l_extendedprice as extended_price,

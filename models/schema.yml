@@ -1,281 +1,226 @@
 version: 2
 
 models:
-  - name: stg_customer
-    description: Staging-модель для таблицы customer.
-    columns:
-      - name: customer_hk
-        tests: [not_null]
-      - name: customer_nation_hk
-      - name: nation_hk
-      - name: effective_from
-      - name: effective_to
-  - name: stg_orders
-    columns:
-      - name: order_hk
-      - name: order_customer_hk
-      - name: customer_hk
-      - name: effective_from
-      - name: effective_to
-  - name: stg_lineitem
-    columns:
-      - name: lineitem_hk
-      - name: order_hk
-      - name: part_hk
-      - name: supplier_hk
-      - name: effective_from
-      - name: effective_to
-  - name: stg_part
-    columns:
-      - name: part_hk
-      - name: effective_from
-      - name: effective_to
-  - name: stg_partsupp
-    columns:
-      - name: part_supplier_hk
-      - name: part_hk
-      - name: supplier_hk
-      - name: effective_from
-      - name: effective_to
-  - name: stg_supplier
-    columns:
-      - name: supplier_nation_hk
-      - name: supplier_hk
-      - name: nation_hk
-      - name: effective_from
-      - name: effective_to
-  - name: stg_nation
-    columns:
-      - name: nation_region_hk
-      - name: nation_hk
-      - name: region_hk
-      - name: effective_from
-      - name: effective_to
-  - name: stg_region
-    columns:
-      - name: region_hk
-      - name: effective_from
-      - name: effective_to
   - name: hub_customer
-    description: "Hub клиентов."
+    description: "Hub клиентов (бизнес-ключ `c_custkey`)."
     columns:
       - name: customer_hk
-        description: "Hashkey (_pk) клиента из атрибута источника `c_custkey`."
+        description: "Hashkey клиента."
         tests: [not_null, unique]
       - name: c_custkey
-        description: "Бизнес-ключ клиента из источника TPCH (`customer.c_custkey`)."
+        description: "Бизнес-ключ клиента из источника TPCH."
       - name: load_datetime
-        description: "Технический timestamp загрузки записи в RAW Vault."
+        description: "Технический timestamp загрузки в Raw Vault."
       - name: record_source
         description: "Источник записи."
 
   - name: hub_supplier
-    description: "Hub поставщиков."
+    description: "Hub поставщиков (бизнес-ключ `s_suppkey`)."
     columns:
       - name: supplier_hk
-        description: "Hashkey (_pk) поставщика из атрибута источника `s_suppkey`."
+        description: "Hashkey поставщика."
         tests: [not_null, unique]
       - name: s_suppkey
-        description: "Бизнес-ключ поставщика из источника TPCH (`supplier.s_suppkey`)."
+        description: "Бизнес-ключ поставщика из источника TPCH."
       - name: load_datetime
-        description: "Технический timestamp загрузки записи в RAW Vault."
+        description: "Технический timestamp загрузки в Raw Vault."
       - name: record_source
         description: "Источник записи."
 
   - name: hub_part
-    description: "Hub деталей."
+    description: "Hub деталей (бизнес-ключ `p_partkey`)."
     columns:
       - name: part_hk
-        description: "Hashkey (_pk) детали из атрибута источника `p_partkey`."
+        description: "Hashkey детали."
         tests: [not_null, unique]
       - name: p_partkey
-        description: "Бизнес-ключ детали из источника TPCH (`part.p_partkey`)."
+        description: "Бизнес-ключ детали из источника TPCH."
       - name: load_datetime
-        description: "Технический timestamp загрузки записи в RAW Vault."
+        description: "Технический timestamp загрузки в Raw Vault."
       - name: record_source
         description: "Источник записи."
 
   - name: hub_order
-    description: "Hub заказов."
+    description: "Hub заказов (бизнес-ключ `o_orderkey`)."
     columns:
       - name: order_hk
-        description: "Hashkey (_pk) заказа из атрибута источника `o_orderkey`."
+        description: "Hashkey заказа."
         tests: [not_null, unique]
       - name: o_orderkey
-        description: "Бизнес-ключ заказа из источника TPCH (`orders.o_orderkey`)."
+        description: "Бизнес-ключ заказа из источника TPCH."
       - name: load_datetime
-        description: "Технический timestamp загрузки записи в RAW Vault."
+        description: "Технический timestamp загрузки в Raw Vault."
       - name: record_source
         description: "Источник записи."
 
   - name: hub_nation
-    description: "Hub стран."
+    description: "Hub стран (бизнес-ключ `n_nationkey`)."
     columns:
       - name: nation_hk
-        description: "Hashkey (_pk) страны из атрибута источника `n_nationkey`."
+        description: "Hashkey страны."
         tests: [not_null, unique]
       - name: n_nationkey
-        description: "Бизнес-ключ страны из источника TPCH (`nation.n_nationkey`)."
+        description: "Бизнес-ключ страны из источника TPCH."
       - name: load_datetime
-        description: "Технический timestamp загрузки записи в RAW Vault."
+        description: "Технический timestamp загрузки в Raw Vault."
       - name: record_source
         description: "Источник записи."
 
   - name: hub_region
-    description: "Hub регионов."
+    description: "Hub регионов (бизнес-ключ `r_regionkey`)."
     columns:
       - name: region_hk
-        description: "Hashkey (_pk) региона из атрибута источника `r_regionkey`."
+        description: "Hashkey региона."
         tests: [not_null, unique]
       - name: r_regionkey
-        description: "Бизнес-ключ региона из источника TPCH (`region.r_regionkey`)."
+        description: "Бизнес-ключ региона из источника TPCH."
       - name: load_datetime
-        description: "Технический timestamp загрузки записи в RAW Vault."
+        description: "Технический timestamp загрузки в Raw Vault."
       - name: record_source
         description: "Источник записи."
 
   - name: link_order_customer
-    description: "Link заказ-клиент с эффектитивностью."
+    description: "Effectivity Link заказ-клиент."
     columns:
       - name: order_customer_hk
-        description: "Hashkey (_pk) связи из атрибутов источника `o_orderkey` + `o_custkey`."
+        description: "Hashkey связи заказ-клиент."
       - name: order_hk
-        description: "FK (_pk) на заказ из атрибута источника `o_orderkey`."
+        description: "FK на заказ."
       - name: customer_hk
-        description: "FK (_pk) на клиента из атрибута источника `o_custkey`."
+        description: "FK на клиента."
       - name: effective_from
-        description: "Начало действия версии связи."
+        description: "Начало действия связи."
       - name: effective_to
-        description: "Конец действия версии связи."
+        description: "Окончание действия связи."
       - name: load_datetime
-        description: "Технический timestamp загрузки записи в RAW Vault."
+        description: "Технический timestamp загрузки в Raw Vault."
       - name: record_source
         description: "Источник записи."
 
   - name: link_part_supplier
-    description: "Link деталь-поставщик с эффектитивностью."
+    description: "Effectivity Link деталь-поставщик."
     columns:
       - name: part_supplier_hk
-        description: "Hashkey (_pk) связи из атрибутов источника `ps_partkey` + `ps_suppkey`."
+        description: "Hashkey связи деталь-поставщик."
       - name: part_hk
-        description: "FK (_pk) на деталь из атрибута источника `ps_partkey`."
+        description: "FK на деталь."
       - name: supplier_hk
-        description: "FK (_pk) на поставщика из атрибута источника `ps_suppkey`."
+        description: "FK на поставщика."
       - name: effective_from
-        description: "Начало действия версии связи."
+        description: "Начало действия связи."
       - name: effective_to
-        description: "Конец действия версии связи."
+        description: "Окончание действия связи."
       - name: load_datetime
-        description: "Технический timestamp загрузки записи в RAW Vault."
+        description: "Технический timestamp загрузки в Raw Vault."
       - name: record_source
         description: "Источник записи."
 
   - name: link_supplier_nation
-    description: "Link поставщик-страна с эффектитивностью."
+    description: "Effectivity Link поставщик-страна."
     columns:
       - name: supplier_nation_hk
-        description: "Hashkey (_pk) связи из атрибутов источника `s_suppkey` + `s_nationkey`."
+        description: "Hashkey связи поставщик-страна."
       - name: supplier_hk
-        description: "FK (_pk) на поставщика из атрибута источника `s_suppkey`."
+        description: "FK на поставщика."
       - name: nation_hk
-        description: "FK (_pk) на страну из атрибута источника `s_nationkey`."
+        description: "FK на страну."
       - name: effective_from
-        description: "Начало действия версии связи."
+        description: "Начало действия связи."
       - name: effective_to
-        description: "Конец действия версии связи."
+        description: "Окончание действия связи."
       - name: load_datetime
-        description: "Технический timestamp загрузки записи в RAW Vault."
+        description: "Технический timestamp загрузки в Raw Vault."
       - name: record_source
         description: "Источник записи."
 
   - name: link_customer_nation
-    description: "Link клиент-страна с эффектитивностью."
+    description: "Effectivity Link клиент-страна."
     columns:
       - name: customer_nation_hk
-        description: "Hashkey (_pk) связи из атрибутов источника `c_custkey` + `c_nationkey`."
+        description: "Hashkey связи клиент-страна."
       - name: customer_hk
-        description: "FK (_pk) на клиента из атрибута источника `c_custkey`."
+        description: "FK на клиента."
       - name: nation_hk
-        description: "FK (_pk) на страну из атрибута источника `c_nationkey`."
+        description: "FK на страну."
       - name: effective_from
-        description: "Начало действия версии связи."
+        description: "Начало действия связи."
       - name: effective_to
-        description: "Конец действия версии связи."
+        description: "Окончание действия связи."
       - name: load_datetime
-        description: "Технический timestamp загрузки записи в RAW Vault."
+        description: "Технический timestamp загрузки в Raw Vault."
       - name: record_source
         description: "Источник записи."
 
   - name: link_nation_region
-    description: "Link страна-регион с эффектитивностью."
+    description: "Effectivity Link страна-регион."
     columns:
       - name: nation_region_hk
-        description: "Hashkey (_pk) связи из атрибутов источника `n_nationkey` + `n_regionkey`."
+        description: "Hashkey связи страна-регион."
       - name: nation_hk
-        description: "FK (_pk) на страну из атрибута источника `n_nationkey`."
+        description: "FK на страну."
       - name: region_hk
-        description: "FK (_pk) на регион из атрибута источника `n_regionkey`."
+        description: "FK на регион."
       - name: effective_from
-        description: "Начало действия версии связи."
+        description: "Начало действия связи."
       - name: effective_to
-        description: "Конец действия версии связи."
+        description: "Окончание действия связи."
       - name: load_datetime
-        description: "Технический timestamp загрузки записи в RAW Vault."
+        description: "Технический timestamp загрузки в Raw Vault."
       - name: record_source
         description: "Источник записи."
 
   - name: link_lineitem
-    description: "Транзакционный link строк заказа (t_link) с payload-атрибутами."
+    description: "Транзакционный Link строк заказа."
     columns:
       - name: lineitem_hk
-        description: "Hashkey (_pk) транзакционной связи из атрибутов источника `l_orderkey` + `l_linenumber`"
+        description: "Hashkey строки заказа (`l_orderkey` + `l_linenumber`)."
         tests: [not_null, unique]
       - name: order_hk
-        description: "FK (_pk) на заказ из атрибута источника `l_orderkey`."
+        description: "FK на заказ."
       - name: part_hk
-        description: "FK (_pk) на деталь из атрибута источника `l_partkey`."
+        description: "FK на деталь."
       - name: supplier_hk
-        description: "FK (_pk) на поставщика из атрибута источника `l_suppkey`."
+        description: "FK на поставщика."
       - name: l_linenumber
-        description: "Номер позиции в заказе."
+        description: "Номер строки в заказе."
       - name: l_quantity
-        description: "Количество по позиции заказа."
+        description: "Количество."
       - name: l_extendedprice
-        description: "Расширенная стоимость позиции до скидок и налогов."
+        description: "Стоимость до скидок и налогов."
       - name: l_discount
-        description: "Скидка по позиции заказа."
+        description: "Скидка."
       - name: l_tax
-        description: "Налог по позиции заказа."
+        description: "Налог."
       - name: l_returnflag
-        description: "Флаг возврата позиции."
+        description: "Флаг возврата."
       - name: l_linestatus
-        description: "Статус позиции заказа."
+        description: "Статус строки."
       - name: l_shipdate
-        description: "Дата отгрузки позиции."
+        description: "Дата отгрузки."
       - name: l_commitdate
-        description: "Дата подтверждения (commit) позиции."
+        description: "Дата commit."
       - name: l_receiptdate
-        description: "Дата получения позиции."
+        description: "Дата получения."
       - name: l_shipinstruct
         description: "Инструкция по отгрузке."
       - name: l_shipmode
-        description: "Режим/способ отгрузки."
+        description: "Режим отгрузки."
       - name: l_comment
-        description: "Комментарий по позиции заказа."
+        description: "Комментарий к строке."
       - name: effective_from
-        description: "Дата эффективности транзакционной связи."
+        description: "Дата эффективности записи."
       - name: load_datetime
-        description: "Технический timestamp загрузки записи в RAW Vault."
+        description: "Технический timestamp загрузки в Raw Vault."
       - name: record_source
         description: "Источник записи."
 
   - name: sat_customer
-    description: "Сателлит клиентских описательных атрибутов."
+    description: "Сателлит описательных атрибутов клиента."
     columns:
       - name: customer_hk
-        description: "Ключ сателлита (_hk) из атрибута источника `c_custkey`."
+        description: "Hashkey клиента."
       - name: c_name
-        description: "Наименование клиента."
+        description: "Имя клиента."
       - name: c_address
         description: "Адрес клиента."
       - name: c_phone
@@ -283,21 +228,21 @@ models:
       - name: c_acctbal
         description: "Баланс клиента."
       - name: c_mktsegment
-        description: "Сегмент рынка клиента."
+        description: "Рыночный сегмент клиента."
       - name: c_comment
         description: "Комментарий клиента."
       - name: effective_from
-        description: "Начало действия версии записи сателлита."
+        description: "Начало действия версии."
       - name: effective_to
-        description: "Конец действия версии записи сателлита."
+        description: "Окончание действия версии."
 
   - name: sat_supplier
-    description: "Сателлит поставщиков."
+    description: "Сателлит описательных атрибутов поставщика."
     columns:
       - name: supplier_hk
-        description: "Ключ сателлита (_hk) из атрибута источника `s_suppkey`."
+        description: "Hashkey поставщика."
       - name: s_name
-        description: "Наименование поставщика."
+        description: "Имя поставщика."
       - name: s_address
         description: "Адрес поставщика."
       - name: s_phone
@@ -307,129 +252,230 @@ models:
       - name: s_comment
         description: "Комментарий поставщика."
       - name: effective_from
-        description: "Начало действия версии записи сателлита."
+        description: "Начало действия версии."
       - name: effective_to
-        description: "Конец действия версии записи сателлита."
+        description: "Окончание действия версии."
 
   - name: sat_part
-    description: "Сателлит деталей."
+    description: "Сателлит описательных атрибутов детали."
     columns:
       - name: part_hk
-        description: "Ключ сателлита (_hk) из атрибута источника `p_partkey`."
+        description: "Hashkey детали."
       - name: p_name
-        description: "Наименование детали."
+        description: "Название детали."
       - name: p_mfgr
-        description: "Производитель детали."
+        description: "Производитель."
       - name: p_brand
-        description: "Бренд детали."
+        description: "Бренд."
       - name: p_type
         description: "Тип детали."
       - name: p_size
         description: "Размер детали."
       - name: p_container
-        description: "Тип упаковки детали."
+        description: "Тип упаковки."
       - name: p_retailprice
-        description: "Розничная цена детали."
+        description: "Розничная цена."
       - name: p_comment
         description: "Комментарий по детали."
       - name: effective_from
-        description: "Начало действия версии записи сателлита."
+        description: "Начало действия версии."
       - name: effective_to
-        description: "Конец действия версии записи сателлита."
+        description: "Окончание действия версии."
 
   - name: sat_order
-    description: "Сателлит заказов."
+    description: "Сателлит описательных атрибутов заказа."
     columns:
       - name: order_hk
-        description: "Ключ сателлита из атрибутов источника `o_orderkey`."
+        description: "Hashkey заказа."
       - name: o_orderstatus
         description: "Статус заказа."
       - name: o_totalprice
-        description: "Общая стоимость заказа."
+        description: "Сумма заказа."
       - name: o_orderdate
         description: "Дата заказа."
       - name: o_orderpriority
         description: "Приоритет заказа."
       - name: o_clerk
-        description: "Ответственный клерк."
+        description: "Клерк."
       - name: o_shippriority
-        description: "Приоритет отгрузки заказа."
+        description: "Приоритет отгрузки."
       - name: o_comment
-        description: "Комментарий по заказу."
+        description: "Комментарий заказа."
       - name: effective_from
-        description: "Начало действия версии записи сателлита."
+        description: "Начало действия версии."
       - name: effective_to
-        description: "Конец действия версии записи сателлита."
+        description: "Окончание действия версии."
 
   - name: sat_nation
-    description: "Сателлит стран."
+    description: "Сателлит описательных атрибутов страны."
     columns:
       - name: nation_hk
-        description: "Ключ сателлита (_hk) из атрибута источника `n_nationkey`."
+        description: "Hashkey страны."
       - name: n_name
-        description: "Наименование страны."
+        description: "Название страны."
       - name: n_comment
         description: "Комментарий по стране."
       - name: effective_from
-        description: "Начало действия версии записи сателлита."
+        description: "Начало действия версии."
       - name: effective_to
-        description: "Конец действия версии записи сателлита."
+        description: "Окончание действия версии."
 
   - name: sat_region
-    description: "Сателлит регионов."
+    description: "Сателлит описательных атрибутов региона."
     columns:
       - name: region_hk
-        description: "Ключ сателлита (_hk) из атрибута источника `r_regionkey`."
+        description: "Hashkey региона."
       - name: r_name
-        description: "Наименование региона."
+        description: "Название региона."
       - name: r_comment
         description: "Комментарий по региону."
       - name: effective_from
-        description: "Начало действия версии записи сателлита."
+        description: "Начало действия версии."
       - name: effective_to
-        description: "Конец действия версии записи сателлита."
+        description: "Окончание действия версии."
 
   - name: sat_partsupp
-    description: "Сателлит связки деталь-поставщик."
+    description: "Сателлит атрибутов связки деталь-поставщик."
     columns:
       - name: part_supplier_hk
-        description: "Ключ сателлита (_hk) из атрибутов источника `ps_partkey` + `ps_suppkey`."
+        description: "Hashkey связки деталь-поставщик."
       - name: part_hk
-        description: "DFK (_hk) из атрибута источника `ps_partkey`."
+        description: "DFK на деталь."
       - name: supplier_hk
-        description: "SFK (_hk) из атрибута источника `ps_suppkey`."
+        description: "SFK на поставщика."
       - name: ps_availqty
-        description: "Доступное количество у поставщика."
+        description: "Доступное количество."
       - name: ps_supplycost
-        description: "Закупочная стоимость у поставщика."
+        description: "Закупочная стоимость."
       - name: ps_comment
-        description: "Комментарий по связке деталь-поставщик."
+        description: "Комментарий по связке."
       - name: effective_from
-        description: "Начало действия версии записи сателлита."
+        description: "Начало действия версии."
       - name: effective_to
-        description: "Конец действия версии записи сателлита."
+        description: "Окончание действия версии."
 
   - name: fact_sales
-    description: "Факт продаж"
+    description: "Факт продаж по строкам заказов."
     columns:
-      - name: order_key
       - name: order_id
-      - name: order_date
-      - name: customer_hk
-      - name: part_hk
-      - name: supplier_hk
+        description: "Идентификатор заказа (hashkey)."
+      - name: customer_id
+        description: "Идентификатор клиента (hashkey)."
+      - name: part_id
+        description: "Идентификатор детали (hashkey)."
+      - name: supplier_id
+        description: "Идентификатор поставщика (hashkey)."
       - name: line_number
+        description: "Номер строки заказа."
       - name: quantity
+        description: "Количество."
       - name: extended_price
+        description: "Сумма строки до скидок и налогов."
       - name: discount
+        description: "Скидка."
       - name: tax
+        description: "Налог."
       - name: return_flag
+        description: "Флаг возврата."
       - name: line_status
+        description: "Статус строки заказа."
       - name: ship_date
+        description: "Дата отгрузки."
       - name: commit_date
+        description: "Дата commit."
       - name: receipt_date
+        description: "Дата получения."
       - name: ship_instruct
+        description: "Инструкция по отгрузке."
       - name: ship_mode
+        description: "Режим отгрузки."
       - name: comment
+        description: "Комментарий по строке заказа."
       - name: net_price
+        description: "Стоимость после скидки."
       - name: total_price_with_tax
+        description: "Стоимость после скидки с учетом налога."
+
+  - name: customer
+    description: "Витрина клиентов с текущими атрибутами, страной и регионом."
+    columns:
+      - name: customer_id
+        description: "Идентификатор клиента (hashkey)."
+      - name: customer_key
+        description: "Бизнес-ключ клиента."
+      - name: customer_name
+        description: "Имя клиента."
+      - name: customer_addr
+        description: "Адрес клиента."
+      - name: customer_nation
+        description: "Страна клиента."
+      - name: customer_region
+        description: "Регион клиента."
+      - name: customer_phone
+        description: "Телефон клиента."
+      - name: customer_acct_balance
+        description: "Баланс клиента."
+      - name: market_segment
+        description: "Рыночный сегмент клиента."
+
+  - name: supplier
+    description: "Витрина поставщиков с текущими атрибутами, страной и регионом."
+    columns:
+      - name: supplier_id
+        description: "Идентификатор поставщика (hashkey)."
+      - name: supplier_key
+        description: "Бизнес-ключ поставщика."
+      - name: supplier_name
+        description: "Имя поставщика."
+      - name: supplier_addr
+        description: "Адрес поставщика."
+      - name: supplier_nation
+        description: "Страна поставщика."
+      - name: customer_region
+        description: "Регион поставщика (алиас в модели)."
+      - name: supplier_phone
+        description: "Телефон поставщика."
+      - name: supplier_acct_balance
+        description: "Баланс поставщика."
+
+  - name: part
+    description: "Витрина деталей с текущими атрибутами."
+    columns:
+      - name: part_id
+        description: "Идентификатор детали (hashkey)."
+      - name: part_key
+        description: "Бизнес-ключ детали."
+      - name: part_name
+        description: "Название детали."
+      - name: manufacturer
+        description: "Производитель."
+      - name: brand
+        description: "Бренд."
+      - name: part_type
+        description: "Тип детали."
+      - name: part_size
+        description: "Размер детали."
+      - name: part_container
+        description: "Тип упаковки."
+      - name: part_retail_price
+        description: "Розничная цена детали."
+
+  - name: customer_order
+    description: "Витрина заказов с текущими атрибутами заказа."
+    columns:
+      - name: order_hk
+        description: "Идентификатор заказа (hashkey)."
+      - name: order_key
+        description: "Бизнес-ключ заказа."
+      - name: order_status
+        description: "Статус заказа."
+      - name: total_price
+        description: "Сумма заказа."
+      - name: order_date
+        description: "Дата заказа."
+      - name: order_priority
+        description: "Приоритет заказа."
+      - name: clerk
+        description: "Клерк."
+      - name: ship_priority
+        description: "Приоритет отгрузки."
